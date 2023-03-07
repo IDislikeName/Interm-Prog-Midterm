@@ -17,7 +17,7 @@ public class Melee_Enemy : Enemy
     public override void Start()
     {
         base.Start();
-        hitBox.GetComponent<HitBox>().damage = 20;
+        hitBox.GetComponent<HitBox>().damage = damage;
     }
 
     // Update is called once per frame
@@ -32,7 +32,7 @@ public class Melee_Enemy : Enemy
     }
     private void OnTriggerStay(Collider other)
     {
-        if (currentAtkCD > attackCD)
+        if (currentAtkCD >= attackCD&&other.CompareTag("Player"))
         {
             currentAtkCD = 0;
             Attack();

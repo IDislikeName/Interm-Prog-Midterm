@@ -22,6 +22,7 @@ public class Weapon : MonoBehaviour
 
     protected LineRenderer lr;
 
+    public AudioClip fireSound;
     public enum WeaponType
     {
         Hitscan,

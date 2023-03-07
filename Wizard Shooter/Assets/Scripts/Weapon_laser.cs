@@ -20,6 +20,8 @@ public class Weapon_laser : Weapon
     GradientColorKey[] colorKey;
     GradientAlphaKey[] alphaKey;
     Color normalColor;
+
+    public AudioClip altFireSound;
     // Start is called before the first frame update
     public override void Start()
     {
@@ -87,24 +89,30 @@ public class Weapon_laser : Weapon
 
     public override void Shoot()
     {
+        SoundManager.instance.Playclip(fireSound);
         base.Shoot();
     }
     public void altShoot()
     {
-        Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, range))
+        SoundManager.instance.Playclip(altFireSound);
+        Vector3 origin = cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
+        RaycastHit[] hits;
+        hits = Physics.RaycastAll(origin, cam.transform.forward, range);
+        if (hits.Length>0)
         {
-            lr.SetPosition(1, hit.point);
-            if (hit.collider.CompareTag("Enemy"))
+            lr.SetPosition(1, origin + cam.transform.forward * range);
+            foreach(RaycastHit hit in hits)
             {
-                hit.collider.GetComponent<Enemy>().currentHP -= altDamage;
+                if (hit.collider.CompareTag("Enemy"))
+                {
+                    hit.collider.GetComponent<Enemy>().currentHP -= altDamage;
+                }
             }
 
         }
         else
         {
-            lr.SetPosition(1, ray.GetPoint(range));
+            lr.SetPosition(1, origin+ cam.transform.forward*range);
         }
         StartCoroutine(ChargeShot());
     }

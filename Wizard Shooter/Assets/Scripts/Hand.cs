@@ -8,6 +8,9 @@ public class Hand : MonoBehaviour
     public GameObject spell;
 
     [SerializeField]
+    Transform hand;
+    bool moving;
+    [SerializeField]
     float coolDown;
     float currentCD;
     // Start is called before the first frame update
@@ -25,24 +28,40 @@ public class Hand : MonoBehaviour
             {
                 if(currentCD >= coolDown)
                 {
-                    currentCD = coolDown;
+                    currentCD = 0;
                     StartCoroutine(Deflect());
                 }
             }
             else
             {
+                moving = false;
                 Launch();
             }
         }
         currentCD += Time.deltaTime;
         if (spell != null)
-            spell.transform.position = transform.position + transform.forward * 2f;
+        {
+            spell.transform.position = transform.position + transform.forward * 0.5f;
+            moving = true;
+        }
+            
+
+        if (moving)
+        {
+            hand.localPosition = Vector3.MoveTowards(hand.localPosition, new Vector3(0f, 0f, 0f), Time.deltaTime * 10f);
+        }
+        else
+        {
+            hand.localPosition = Vector3.MoveTowards(hand.localPosition,new Vector3(-0.3f,0f,0f),Time.deltaTime*10f);
+        }
     }
     IEnumerator Deflect()
     {
+        moving = true;
         deflectBox.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         deflectBox.SetActive(false);
+        moving = false;
     }
     public void Launch()
     {

@@ -48,6 +48,10 @@ public class GameManager : MonoBehaviour
         {
             Restart();
         }
+        if (hp <= 0)
+        {
+            Lose();
+        }
     }
     public void Restart()
     {
