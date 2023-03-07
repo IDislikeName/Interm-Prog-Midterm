@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    NavMeshAgent nav;
+    protected NavMeshAgent nav;
     [SerializeField]
     protected float checkTime;
     protected float currentTime = 0;
@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     protected int maxHP;
     public int currentHP;
+    protected bool dead;
 
 
     // Start is called before the first frame update
@@ -46,6 +47,12 @@ public class Enemy : MonoBehaviour
     }
     public virtual void Die()
     {
-        Destroy(gameObject);
+        if (!dead)
+        {
+            dead = true;
+            GameManager.instance.score++;
+            Destroy(gameObject);
+        }
+        
     }
 }

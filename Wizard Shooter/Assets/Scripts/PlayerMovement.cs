@@ -105,7 +105,7 @@ public class PlayerMovement : MonoBehaviour
 
             Invoke(nameof(ResetJump), jumpCooldown);
         }
-        if (Input.GetKeyDown(KeyCode.LeftShift) && readyToDash)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && readyToDash&&GameManager.instance.mana>=dashCost)
         {
             readyToDash = false;
             Dash();
