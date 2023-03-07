@@ -5880,6 +5880,7 @@ MonoBehaviour:
   fireSound: {fileID: 8300000, guid: d6bbfbb488806cb4891d78a9afb632ce, type: 3}
   type: 0
   altShootCD: 5
+  altMana: 25
   altFireHoldTime: 1.5
   altDamage: 5
   rend: {fileID: 6652253183165132737}
@@ -8010,7 +8011,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132148101319650}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.4, y: -1.1, z: 0.46000004}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0

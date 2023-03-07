@@ -8,6 +8,8 @@ public class Weapon_laser : Weapon
     float altShootCD;
     float altCurrentCD;
     [SerializeField]
+    int altMana;
+    [SerializeField]
     float altFireHoldTime;
     [SerializeField]
     int altDamage;
@@ -72,7 +74,7 @@ public class Weapon_laser : Weapon
         {
             rend.material.color = normalColor;
             charging = false;   
-            if(timeHeld > altFireHoldTime && altCurrentCD >= altShootCD)
+            if(timeHeld > altFireHoldTime && altCurrentCD >= altShootCD&&GameManager.instance.mana>altMana)
             {
                 altShoot();
                 altCurrentCD = 0;
@@ -89,11 +91,14 @@ public class Weapon_laser : Weapon
 
     public override void Shoot()
     {
+        GetComponentInChildren<Animator>().SetTrigger("Attack");
         SoundManager.instance.Playclip(fireSound);
         base.Shoot();
     }
     public void altShoot()
     {
+        GetComponentInChildren<Animator>().SetTrigger("Attack");
+        GameManager.instance.mana -= altMana;
         SoundManager.instance.Playclip(altFireSound);
         Vector3 origin = cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
         RaycastHit[] hits;
@@ -123,7 +128,7 @@ public class Weapon_laser : Weapon
         lr.startWidth = 0.3f;
         lr.startColor = Color.red;
         lr.endColor = Color.red;
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.5f);
         lr.startWidth = 0.1f;
         lr.startColor = baseColor;
         lr.endColor = baseColor;
